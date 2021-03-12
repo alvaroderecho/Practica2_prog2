@@ -3,7 +3,6 @@
 
 #include "types.h"
 
-
 /* function type to convert strings to elements of the appropriate type */
 /* the functions should allocate memory for the element */
 typedef void *(*elem_from_string)(const char *str);
