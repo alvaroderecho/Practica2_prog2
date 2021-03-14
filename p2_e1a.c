@@ -6,9 +6,47 @@
 
 Status mergeStacks(Stack * sin1, Stack * sin2, Stack * sout);
 
-int main() {
+int main(int argc,char * argv[]) {
+Stack *p1,*p2,*pout;
+FILE *f1,*f2;
+int num1,num2,i,x;
+float nota1[100],nota2[100];
+p1 = stack_init();
+p2 = stack_init();
+pout = stack_init();
+f1 = fopen (argv[1],"r");
+fscanf(f1,"%d",&num1);
+for(i=0;fscanf(f1,"%f",&nota1[i])==1;i++){
 
+}
+for (i=0;i<num1;i++){
+    
+    if (stack_push(p1,&nota1[i])==ERROR) return -1;
+}
+fclose(f1);
 
+f2 = fopen (argv[2],"r");
+fscanf(f2,"%d",&num2);
+for(i=0;fscanf(f2,"%f",&nota2[i])==1;i++){
+
+}
+for (i=0;i<num2;i++){
+    
+    if (stack_push(p2,&nota2[i])==ERROR) return -1;
+}
+fclose(f2);
+
+printf("Ranking 0:\n");
+
+x=stack_print(stdout,p1,float_print);
+if (x<0) return -1;
+printf("Ranking 1:\n");
+x=stack_print(stdout,p2,float_print);
+if (x<0) return -1;
+printf("Ranking 2:\n");
+if (mergeStacks(p1,p2,pout)==ERROR) return -1;
+x=stack_print(stdout,pout,float_print);
+if (x<0) return -1;
 return 0;
 }
 
