@@ -61,11 +61,18 @@ Status mergeStacks(Stack * sin1, Stack * sin2, Stack * sout) {
         while (stack_isEmpty(sin1) == FALSE && stack_isEmpty(sin2) == FALSE)
         {
             //una de las dos vacía se sale del bucle
-            if (float_cmp(stack_top(sin1),stack_top(sin2)) > 0)
+            //int i;
+            //i = float_cmp(stack_top(sin1),stack_top(sin2));
+            if (*(float*)stack_top(sin1)>*(float*)stack_top(sin2)){
                 e = stack_pop(sin1);
-            else
+                if (e == NULL) return ERROR;
+                if (stack_push(sout, e)==ERROR) return ERROR;
+            }
+            else{
                 e = stack_pop(sin2);
-            stack_push(sout, e);
+                if (e == NULL) return ERROR;
+                if (stack_push(sout, e)==ERROR) return ERROR;
+        }
         }
         //Detect non-empty stack
         if (stack_isEmpty(sin1) == TRUE) 
@@ -76,7 +83,8 @@ Status mergeStacks(Stack * sin1, Stack * sin2, Stack * sout) {
         //pop
         while (stack_isEmpty(ps) == FALSE ) {
             e = stack_pop(ps);
-            stack_push(sout,e);
+            if (e == NULL) return ERROR;
+            if (stack_push(sout,e) == ERROR) return ERROR;
         }
     st = OK;
     return st;
