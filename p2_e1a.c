@@ -21,7 +21,13 @@ for(i=0;fscanf(f1,"%f",&nota1[i])==1;i++){
 }
 for (i=0;i<num1;i++){
     
-    if (stack_push(p1,&nota1[i])==ERROR) return -1;
+    if (stack_push(p1,&nota1[i])==ERROR){ 
+    stack_free(p1);
+    stack_free(p2);
+    stack_free(pout);
+    fclose(f1);
+    return -1;
+    }
 }
 fclose(f1);
 
@@ -32,21 +38,44 @@ for(i=0;fscanf(f2,"%f",&nota2[i])==1;i++){
 }
 for (i=0;i<num2;i++){
     
-    if (stack_push(p2,&nota2[i])==ERROR) return -1;
+    if (stack_push(p2,&nota2[i])==ERROR){
+    stack_free(p1);
+    stack_free(p2);
+    stack_free(pout);
+    fclose(f2);
+    return -1;
+}
 }
 fclose(f2);
 
 printf("Ranking 0:\n");
 
 x=stack_print(stdout,p1,float_print);
-if (x<0) return -1;
+if (x<0){
+    stack_free(p1);
+    stack_free(p2);
+    stack_free(pout);
+    return -1;
+}
 printf("Ranking 1:\n");
 x=stack_print(stdout,p2,float_print);
-if (x<0) return -1;
+if (x<0){
+    stack_free(p1);
+    stack_free(p2);
+    stack_free(pout);
+    return -1;
+}
 printf("Ranking 2:\n");
-if (mergeStacks(p1,p2,pout)==ERROR) return -1;
+if (mergeStacks(p1,p2,pout)==ERROR){
+    stack_free(p1);
+    stack_free(p2);
+    stack_free(pout);
+return -1;
+}
 x=stack_print(stdout,pout,float_print);
-if (x<0) return -1;
+stack_free(p1);
+stack_free(p2);
+stack_free(pout);
 return 0;
 }
 
@@ -55,7 +84,7 @@ Status mergeStacks(Stack * sin1, Stack * sin2, Stack * sout) {
         void *e;
         Stack * ps;
         Status st = ERROR;
-        if ((ps = stack_init()) == NULL) return st;
+        
 
 
         while (stack_isEmpty(sin1) == FALSE && stack_isEmpty(sin2) == FALSE)
@@ -65,13 +94,13 @@ Status mergeStacks(Stack * sin1, Stack * sin2, Stack * sout) {
             //i = float_cmp(stack_top(sin1),stack_top(sin2));
             if (*(float*)stack_top(sin1)>*(float*)stack_top(sin2)){
                 e = stack_pop(sin1);
-                if (e == NULL) return ERROR;
-                if (stack_push(sout, e)==ERROR) return ERROR;
+                if (e == NULL) return st;
+                if (stack_push(sout, e)==st) return st;
             }
             else{
                 e = stack_pop(sin2);
-                if (e == NULL) return ERROR;
-                if (stack_push(sout, e)==ERROR) return ERROR;
+                if (e == NULL) return st;
+                if (stack_push(sout, e)==st) return st;
         }
         }
         //Detect non-empty stack
@@ -83,10 +112,17 @@ Status mergeStacks(Stack * sin1, Stack * sin2, Stack * sout) {
         //pop
         while (stack_isEmpty(ps) == FALSE ) {
             e = stack_pop(ps);
-            if (e == NULL) return ERROR;
-            if (stack_push(sout,e) == ERROR) return ERROR;
+            if (e == NULL){
+            //stack_free(ps);
+             return st;
         }
-    st = OK;
+            if (stack_push(sout,e) == st) {
+            //stack_free(ps);
+            return st;
+            }
+        }
+        //stack_free(ps);
+        st = OK;
     return st;
 
     }
