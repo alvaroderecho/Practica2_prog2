@@ -3,6 +3,8 @@
 #include "stack_fDoble.h"
 #include "file_utils.h"
 
+#define MAX_LENGTH 100
+#define FAIL -1
 
 Status mergeStacks(Stack * sin1, Stack * sin2, Stack * sout);
 
@@ -10,11 +12,11 @@ int main(int argc,char * argv[]) {
 Stack *p1,*p2,*pout;
 FILE *f1,*f2;
 int num1,num2,i,x;
-float nota1[100],nota2[100];
-p1 = stack_init();
-p2 = stack_init();
-pout = stack_init();
-f1 = fopen (argv[1],"r");
+float nota1[MAX_LENGTH],nota2[MAX_LENGTH];
+if ((p1 = stack_init()) == NULL) return FAIL;
+if ((p2 = stack_init()) == NULL) return FAIL;
+if ((pout = stack_init()) == NULL) return FAIL;
+if ((f1 = fopen (argv[1],"r")) == NULL) return FAIL;
 fscanf(f1,"%d",&num1);
 for(i=0;fscanf(f1,"%f",&nota1[i])==1;i++){
 
@@ -26,12 +28,12 @@ for (i=0;i<num1;i++){
     stack_free(p2);
     stack_free(pout);
     fclose(f1);
-    return -1;
+    return FAIL;
     }
 }
 fclose(f1);
 
-f2 = fopen (argv[2],"r");
+if ((f2 = fopen (argv[2],"r")) == NULL) return FAIL;
 fscanf(f2,"%d",&num2);
 for(i=0;fscanf(f2,"%f",&nota2[i])==1;i++){
 
@@ -43,7 +45,7 @@ for (i=0;i<num2;i++){
     stack_free(p2);
     stack_free(pout);
     fclose(f2);
-    return -1;
+    return FAIL;
 }
 }
 fclose(f2);
@@ -55,7 +57,7 @@ if (x<0){
     stack_free(p1);
     stack_free(p2);
     stack_free(pout);
-    return -1;
+    return FAIL;
 }
 printf("Ranking 1:\n");
 x=stack_print(stdout,p2,float_print);
@@ -63,14 +65,14 @@ if (x<0){
     stack_free(p1);
     stack_free(p2);
     stack_free(pout);
-    return -1;
+    return FAIL;
 }
 printf("Ranking 2:\n");
 if (mergeStacks(p1,p2,pout)==ERROR){
     stack_free(p1);
     stack_free(p2);
     stack_free(pout);
-return -1;
+return FAIL;
 }
 x=stack_print(stdout,pout,float_print);
 stack_free(p1);

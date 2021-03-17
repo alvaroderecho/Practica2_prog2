@@ -142,7 +142,7 @@ Status vertex_setState(Vertex *v, const Label state)
 
 int vertex_cmp(const void *v1, const void *v2)
 {
-  int more=1, less=2, same=3;
+  int more=1, less=-1, same=0;
 
   
   if ((vertex_getId(v1)) > (vertex_getId(v2)))
