@@ -92,7 +92,7 @@ Status mergeStacks(Stack * sin1, Stack * sin2, Stack * sout) {
             //una de las dos vacía se sale del bucle
             //int i;
             //i = float_cmp(stack_top(sin1),stack_top(sin2));
-            if (*(float*)stack_top(sin1)>*(float*)stack_top(sin2)){
+            if (float_cmp(stack_top(sin1),stack_top(sin2)) > 0){
                 e = stack_pop(sin1);
                 if (e == NULL) return st;
                 if (stack_push(sout, e)==st) return st;
