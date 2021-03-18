@@ -16,6 +16,11 @@ Vertex *v1,*v2;
 char desc1[MAX_LENGTH], desc2[MAX_LENGTH];
 int num1,num2,i,sx;
 
+if (argc != 3) {
+    printf("Debe incluir tres argumentos: ./exe arg1.txt arg2.txt \n");
+    return FAIL;
+}
+
 if ((p1 = stack_init()) == NULL) return FAIL;
 if ((p2 = stack_init()) == NULL) {
 stack_free(p1);
