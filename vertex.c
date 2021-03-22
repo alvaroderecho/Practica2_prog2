@@ -34,6 +34,9 @@ Status vertex_setField(Vertex *v, char *key, char *value)
   {
     return vertex_setState(v, (Label)atoi(value));
   }
+  else if (strcmp(kay,"index") == 0){
+    return vertex_setIndex(v,(int)atoi(value))
+  }
 
   return ERROR;
 }
@@ -88,7 +91,7 @@ if (v==NULL) return NULL;
   v->id=0;
   strcpy(v->tag," ");
   v->state=WHITE;
-
+  v->index=0;
   return v;
 }
 
