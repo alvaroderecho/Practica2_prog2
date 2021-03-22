@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "stack_fDoble.h"
 
 #define MAX_VTX 4096
 #define NO_ID -1
+
 
 //private Funcions:
 int _graph_findVertexById(const Graph *g,long id);
@@ -300,5 +302,57 @@ Status graph_readFromFile(FILE *fin, Graph *g)
     return OK;
 }
 Status graph_depthSearch(Graph *g,long from_id,long to_id){
+    
+    Stack *s;
+    Status st = OK;
+    int i;
+    Vertex * v0;
+    Vertex * vf;
+    Vertex * vt;
 
+    if ((v0 = vertex_init()) == NULL) return ERROR;
+    if ((vf = vertex_init()) == NULL) {
+        vertex_free(v0);
+        return ERROR;
+    }
+    if ((vt = vertex_init()) == NULL) {
+        vertex_free(v0);
+        vertex_free(vf);
+        return ERROR;
+    }
+
+    for (i=0;i<graph_getNumberOfVertices(g);i++) {
+        if ((vertex_setState(g->vertices[i],WHITE)) == ERROR) return ERROR;
+    }
+
+    if ((s = stack_init()) == NULL) return ERROR;
+
+    for (i=0;i<graph_getNumberOfVertices(g);i++) { //find vf and vt
+        if ((vertex_getId(g->vertices[i])) == from_id) {
+            if ((vertex_setState(g->vertices[i],BLACK)) == ERROR) {
+                return ERROR;
+            }
+            else
+                vf = g->vertices[i];
+            
+        if ((vertex_getId(g->vertices[i])) == to_id) {
+            vt = g->vertices[i];
+        }
+    }
+
+    if ((stack_push(s,vf)) == ERROR) return ERROR;
+
+    while (stack_isEmpty(s) == FALSE && st == OK) {
+
+        v0 = stack_pop(s);
+        if (vertex_cmp(v0,vt))
+            st = FALSE;
+        else {
+                    //usar index
+        }
+    }
+    vertex_free(v0);
+    vertex_free(vf);
+    stack_free(s);
+    return st;
 }
