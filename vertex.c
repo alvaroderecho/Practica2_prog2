@@ -7,12 +7,15 @@ struct _Vertex
   long id;
   char tag[TAG_LENGTH];
   Label state;
+
+  int index;
 };
 /*----------------------------------------------------------------------------------------*/
 /*
-Private function:
+Private functions:
 */
 Status vertex_setField(Vertex *v, char *key, char *value);
+
 
 Status vertex_setField(Vertex *v, char *key, char *value)
 {

@@ -6,6 +6,20 @@
 #define MAX_VTX 4096
 #define NO_ID -1
 
+//private Funcions:
+int _graph_findVertexById(const Graph *g,long id);
+int _graph_getNumConnections(const Graph *g,int ix);
+int *_graph_getConnectionsIndex(const Graph *g,int ix);
+
+int _graph_findVertexById(const Graph *g,long id){
+
+}
+int _graph_getNumConnections(const Graph* g,int ix){
+
+}
+int *_graph_getConnectionsIndex(const Graph *g,int ix){
+
+}
 struct _Graph
 {
     Vertex *vertices[MAX_VTX];          /*!<Arraywiththegraphvertices*/
@@ -284,4 +298,7 @@ Status graph_readFromFile(FILE *fin, Graph *g)
         graph_newEdge(g,orig,dest);
     }
     return OK;
+}
+Status graph_depthSearch(Graph *g,long from_id,long to_id){
+
 }

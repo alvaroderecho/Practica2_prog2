@@ -208,5 +208,5 @@ int graph_print (FILE *pf, const Graph *g);
  * @return OK or ERROR
  */
 Status graph_readFromFile (FILE *fin, Graph *g);
-
+Status graph_depthSearch(Graph *g,long from_id,long to_id);
 #endif /* GRAPH_H */
