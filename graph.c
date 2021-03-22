@@ -1,4 +1,5 @@
 #include "graph.h"
+#include "stack_fDoble.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -12,13 +13,64 @@ int _graph_getNumConnections(const Graph *g,int ix);
 int *_graph_getConnectionsIndex(const Graph *g,int ix);
 
 int _graph_findVertexById(const Graph *g,long id){
-
+    int i;
+    if (!g) return NO_ID;
+    for (i=0;i<graph_getNumberOfVertices(g);i++){
+        if (vertex_getId(g->vertices[i]) == id ) return 1;
+    }
+    return NO_ID;
 }
 int _graph_getNumConnections(const Graph* g,int ix){
+    int i, j, num_connections;
+    if (!g)
+        return NO_ID;
+
+    for (i = 0; i < graph_getNumberOfVertices(g); i++)
+    {
+        if (vertex_getIndex(g->vertices[i]) == ix)
+        {
+            for (j = 0, num_connections = 0; j < graph_getNumberOfVertices(g); j++)
+            {
+                if (g->connections[i][j] == TRUE)
+                {
+                    num_connections++;
+                }
+            }
+            return num_connections;
+        }
+    }
+
+    return 0;
 
 }
 int *_graph_getConnectionsIndex(const Graph *g,int ix){
+    int num_connections, i, j,flag;
+    int *conn;
+    if (!g)
+        return NULL;
 
+    if ((num_connections = _graph_getNumConnections(g, ix)) == NO_ID)
+        return NULL;
+
+    if ((conn = (int *)malloc(sizeof(int) * num_connections)) == NULL)
+        return NULL;
+
+    for (i = 0,flag=0; i < graph_getNumberOfVertices(g); i++)
+    {
+        if (vertex_getIndex(g->vertices[i]) == ix)
+        {
+            for (j = 0; j < graph_getNumberOfVertices(g); j++)
+            {
+                if (g->connections[i][j] == TRUE)
+                {
+                    conn[flag] = (int)vertex_getId(g->vertices[j]);
+                    flag++;
+                }
+            }
+            return conn;
+        }
+    }
+    return NULL;
 }
 struct _Graph
 {
@@ -300,5 +352,6 @@ Status graph_readFromFile(FILE *fin, Graph *g)
     return OK;
 }
 Status graph_depthSearch(Graph *g,long from_id,long to_id){
-
+    Graph *g;
+    Vertex *vf,*vt;
 }
