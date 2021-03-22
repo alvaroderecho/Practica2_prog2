@@ -47,9 +47,10 @@ int main(int argc, char * argv[]) {
 
 
     for (i=0;i<graph_getNumberOfVertices(g);i++) {
-        if (vertex_getState(graph_get_vertex_fromIx(g, i)) == BLACK && !i%2) {
+
+        if ((vertex_getState(graph_get_vertex_fromIx(g, i)) == BLACK) && !(i%2)) {
             vertex_print(stdout,graph_get_vertex_fromIx(g, i));
-                        
+            printf("\n");                   
         }
     }
     printf("\n");

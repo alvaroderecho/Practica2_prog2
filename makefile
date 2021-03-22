@@ -30,4 +30,4 @@ graph.o: graph.c vertex.c graph.h vertex.h types.h
 
 clean:
 	@echo "Cleaning: "
-	rm -rf *.o p2_e1a p2_e1b
+	rm -rf *.o p2_e1a p2_e1b p2_e2
