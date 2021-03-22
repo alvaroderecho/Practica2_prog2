@@ -218,5 +218,6 @@ void *vertex_copy(const void *src);
  * successfully. If there have been errors returns -1.
  */
 int vertex_print (FILE * pf, const void * v);
-
+int vertex_getIndex(Vertex *v);
+Status vertex_setIndex(Vertex *v, int Index);
 #endif /* VERTEX_H_ */

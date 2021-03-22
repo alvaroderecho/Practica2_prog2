@@ -142,6 +142,15 @@ Status vertex_setState(Vertex *v, const Label state)
   v->state = state;
   return OK;
 }
+int vertex_getIndex(Vertex *v){
+  if (v == NULL) return -1;
+  return v->index;
+}
+Status vertex_setIndex(Vertex *v, int Index){
+  if (v == NULL) return ERROR;
+  v->index=Index;
+  return OK;
+}
 
 int vertex_cmp(const void *v1, const void *v2)
 {
