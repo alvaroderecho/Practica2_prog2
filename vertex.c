@@ -34,8 +34,8 @@ Status vertex_setField(Vertex *v, char *key, char *value)
   {
     return vertex_setState(v, (Label)atoi(value));
   }
-  else if (strcmp(kay,"index") == 0){
-    return vertex_setIndex(v,(int)atoi(value))
+  else if (strcmp(key,"index") == 0){
+    return vertex_setIndex(v,(int)atoi(value));
   }
 
   return ERROR;
@@ -145,7 +145,7 @@ Status vertex_setState(Vertex *v, const Label state)
   v->state = state;
   return OK;
 }
-int vertex_getIndex(Vertex *v){
+int vertex_getIndex(const Vertex *v){
   if (v == NULL) return -1;
   return v->index;
 }
@@ -193,7 +193,7 @@ int vertex_print (FILE * pf, const void * v){
   
   //pf= fopen("stdout","w");
   if (pf==NULL) return -1;
-  fprintf (pf,"[id=%ld tag=%s state=%d]",vertex_getId(v),vertex_getTag(v),vertex_getState(v));
+  fprintf (pf,"[%ld, %s, %d, %d]",vertex_getId(v),vertex_getTag(v),vertex_getState(v),vertex_getIndex(v));
   
   return strlen(vertex_getTag(v));
 }

@@ -16,9 +16,17 @@ p2_e1b: p2_e1b.o libstack_fDoble.a vertex.o
 p2_e1b.o: p2_e1b.c file_utils.h stack_fDoble.h types.h vertex.h
 	$(CC) $(CFLAGS) -c $<
 
+p2_e2: p2_e2.o libstack_fDoble.a graph.o vertex.o
+	$(CC) $(CFLAGS) -o $@ $< vertex.o graph.o $(LDFLAGS) $(IDFLAGS) $(LDLIBS)
+
+p2_e2.o: p2_e2.c stack_fDoble.h types.h vertex.h graph.h
+	$(CC) $(CFLAGS) -c $<
+
 vertex.o: vertex.c vertex.h types.h
 	$(CC) $(CFLAGS) -c $<
 
+graph.o: graph.c vertex.c graph.h vertex.h types.h
+	$(CC) $(CFLAGS) -c $<
 
 clean:
 	@echo "Cleaning: "

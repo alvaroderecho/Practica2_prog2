@@ -209,4 +209,5 @@ int graph_print (FILE *pf, const Graph *g);
  */
 Status graph_readFromFile (FILE *fin, Graph *g);
 Status graph_depthSearch(Graph *g,long from_id,long to_id);
+Vertex *graph_get_vertex_fromIx(Graph *g, int ix);
 #endif /* GRAPH_H */
