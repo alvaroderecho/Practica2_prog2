@@ -113,14 +113,9 @@ Status mergeStacks(Stack * sin1, Stack * sin2, Stack * sout) {
         Stack * ps;
         Status st = ERROR;
         
-        if (sin1 == NULL){
-            printf("Error in mergeStacks.");
-            return ERROR;
-        }
-        if (sin2 == NULL){
-            printf ("Error in mergeStacks.");
-            return ERROR;
-        }
+        if (sin1 == NULL)return ERROR;
+        if (sin2 == NULL) return ERROR;
+
 
         while (stack_isEmpty(sin1) == FALSE && stack_isEmpty(sin2) == FALSE)
         {
