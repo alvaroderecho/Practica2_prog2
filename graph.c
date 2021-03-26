@@ -118,7 +118,7 @@ Graph *graph_init()
 void graph_free(Graph *g)
 {
     int i;
-    for (i = 0; i < MAX_VTX; i++)
+    for (i = 0; i < g->num_vertices; i++)
     {
         vertex_free(g->vertices[i]);
     }
@@ -330,7 +330,7 @@ int graph_print(FILE *pf, const Graph *g)
 
     for (i = 0, num_car = 0; i < graph_getNumberOfVertices(g); i++)
     {
-        fprintf(pf, "[%d, %s, %d, %d]: ", i + 1, vertex_getTag(g->vertices[i]), vertex_getState(g->vertices[i]), vertex_getIndex(g->vertices[i]));
+        fprintf(pf, "[%ld, %s, %d, %d]: ", vertex_getId(g->vertices[i]), vertex_getTag(g->vertices[i]), vertex_getState(g->vertices[i]), vertex_getIndex(g->vertices[i]));
         num_car += strlen(vertex_getTag(g->vertices[i]));
 
         if (graph_getNumberOfConnectionsFromId(g, vertex_getId(g->vertices[i])) > 0)
@@ -339,7 +339,7 @@ int graph_print(FILE *pf, const Graph *g)
             {
                 if (graph_connectionExists(g, vertex_getId(g->vertices[i]), vertex_getId(g->vertices[j])) == TRUE)
                 {
-                    fprintf(pf, "[%d, %s, %d, %d] ", j + 1, vertex_getTag(g->vertices[j]), vertex_getState(g->vertices[j]), vertex_getIndex(g->vertices[j]));
+                    fprintf(pf, "[%ld, %s, %d, %d] ", vertex_getId(g->vertices[j]), vertex_getTag(g->vertices[j]), vertex_getState(g->vertices[j]), vertex_getIndex(g->vertices[j]));
                     num_car += strlen(vertex_getTag(g->vertices[j]));
                 }
             }
@@ -375,25 +375,11 @@ Status graph_depthSearch(Graph *g, long from_id, long to_id)
 {
 
     Stack *s;
-    Status st = OK;
+    Status st = OK, st1 = ERROR, st2= ERROR;
     int i, pos1 = 0, pos2 = 0;
     Vertex *v0;
     Vertex *vf;
     Vertex *vt;
-
-    if ((v0 = vertex_init()) == NULL)
-        return ERROR;
-    if ((vf = vertex_init()) == NULL)
-    {
-        vertex_free(v0);
-        return ERROR;
-    }
-    if ((vt = vertex_init()) == NULL)
-    {
-        vertex_free(v0);
-        vertex_free(vf);
-        return ERROR;
-    }
 
     for (i = 0; i < graph_getNumberOfVertices(g); i++)
     {
@@ -403,9 +389,6 @@ Status graph_depthSearch(Graph *g, long from_id, long to_id)
 
     if ((s = stack_init()) == NULL)
     {
-        vertex_free(v0);
-        vertex_free(vf);
-        vertex_free(vt);
         return ERROR;
     }
 
@@ -415,27 +398,24 @@ Status graph_depthSearch(Graph *g, long from_id, long to_id)
         {
             if ((vertex_setState(g->vertices[i], BLACK)) == ERROR)
             {
-                vertex_free(v0);
-                vertex_free(vf);
-                vertex_free(vt);
                 stack_free(s);
                 return ERROR;
             }
-            else
+            else {
+                st1 = OK;
                 vf = g->vertices[i];
+            }
         }
         else if ((vertex_getId(g->vertices[i])) == to_id)
         {
+            st2 = OK;
             vt = g->vertices[i];
         }
     }
-
+    if (st1 == ERROR || st2 == ERROR) return ERROR;
 
     if ((stack_push(s, vf)) == ERROR)
     {
-        vertex_free(v0);
-        vertex_free(vf);
-        vertex_free(vt);
         stack_free(s);
         return ERROR;
     }

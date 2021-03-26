@@ -218,6 +218,33 @@ void *vertex_copy(const void *src);
  * successfully. If there have been errors returns -1.
  */
 int vertex_print (FILE * pf, const void * v);
+
+/** 
+ * @brief Gets the vertex index.
+ * 
+ * @code
+ * Vertex * v;
+ * v = vertex_init();
+ * vertex_getIndex(v);
+ * @endcode
+ *
+ * @param v Vertex pointer
+ *
+ * @return Returns the index of a vertex, int type.
+ */
 int vertex_getIndex(const Vertex *v);
+
+/** 
+ * @brief Put the vertex  index
+ * 
+ * @code
+ * vertex_getIndex(v,Index);
+ * @endcode
+ *
+ * @param v Vertex pointer
+ * @param Index New Vertex Index
+ *
+ * @return Returns ERROR if fails, returns OK if works.
+ */
 Status vertex_setIndex(Vertex *v, int Index);
 #endif /* VERTEX_H_ */

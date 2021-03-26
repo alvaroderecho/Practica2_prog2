@@ -208,6 +208,25 @@ int graph_print (FILE *pf, const Graph *g);
  * @return OK or ERROR
  */
 Status graph_readFromFile (FILE *fin, Graph *g);
+
+/** 
+ * @brief Permite la búsqueda en profundidad de vectores dentro de un intervalo
+ * 
+ * @param g Graph pointer
+ * @param from_id Id del vértice inicial
+ * @param to_id Id del vértice final
+ *
+ * @return Devuelve ERROR si no ha funcionado, devuelve OK si ha realizado la búsqueda correctamente.
+ */
 Status graph_depthSearch(Graph *g,long from_id,long to_id);
+
+/** 
+ * @brief Gets the graph vertex in position ix of the vertex array.
+ *
+ * @param g Graph pointer
+ * @param ix Vertex position in Vertex array.
+ *
+ * @return Returns the vertex on ix position.
+ */
 Vertex *graph_get_vertex_fromIx(Graph *g, int ix);
 #endif /* GRAPH_H */
